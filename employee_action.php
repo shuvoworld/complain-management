@@ -62,7 +62,7 @@ if (isset($_POST['btn_action'])) {
 	}
 	if ($_POST['btn_action'] == 'delete') {
 		$status = 'active';
-		if ($_POST['status'] == 'active') {
+		if ($_POST['status'] == 'engaged' || $_POST['status'] == 'free') {
 			$status = 'inactive';
 		}
 		$query = "

@@ -38,7 +38,9 @@ $filtered_rows = $statement->rowCount();
 foreach ($result as $row) {
 	$status = '';
 	if ($row['status'] == 'engaged') {
-		$status = '<span class="label label-danger">Engaged</span>';
+		$status = '<span class="label label-info">Engaged</span>';
+	} elseif ($row['status'] == 'inactive') {
+		$status = '<span class="label label-danger">In Active</span>';
 	} else {
 		$status = '<span class="label label-success">Free</span>';
 	}
@@ -48,7 +50,7 @@ foreach ($result as $row) {
 	$sub_array[] = $row['contact_no'];
 	$sub_array[] = $status;
 	$sub_array[] = '<button type="button" name="update" id="' . $row["id"] . '" class="btn btn-warning btn-xs update">Update</button>';
-	$sub_array[] = '<button type="button" name="delete" id="' . $row["id"] . '" class="btn btn-danger btn-xs delete" data-status="' . $row["status"] . '">Delete</button>';
+	$sub_array[] = '<button type="button" name="delete" id="' . $row["id"] . '" class="btn btn-danger btn-xs delete" data-status="' . $row["status"] . '">Make Inactive</button>';
 	$data[] = $sub_array;
 }
 
