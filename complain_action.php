@@ -1,104 +1,79 @@
 <?php
 
-//complain_action.php
+//brand_fetch.php
 
 include 'database_connection.php';
-include 'function.php';
 
-if (isset($_POST['btn_action'])) {
-	if ($_POST['btn_action'] == 'Add') {
+$query = '';
 
-		$category_id = $_POST["category_id"];
-		$category_name = getSingleValue($connect, 'category_name', 'category', 'category_id', $_POST["category_id"]);
-		$subject = $_POST["subject"];
-		$description = $_POST["description"];
-		$contact_no = $_POST["contact_no"];
-		$current_date = date('Y-m-d H:i:s');
-		$status = 'Pending';
-		$query = "
-		INSERT INTO complain (category_id, category_name, subject, description, contact_no, created_at, updated_at, status)
-		VALUES (:category_id, :category_name, :subject, :description, :contact_no, :created_at, :updated_at, :status)
-		";
-		$statement = $connect->prepare($query);
-		$statement->execute(
-			array(
-				':category_id' => $category_id,
-				':category_name' => $category_name,
-				':subject' => $subject,
-				':description' => $description,
-				':contact_no' => $contact_no,
-				':status' => $status,
-				':created_at' => $current_date,
-				':updated_at' => $current_date,
-			)
-		);
-		$result = $statement->fetchAll();
-		if (isset($result)) {
-			echo 'Complain Submitted Successfully!';
-		}
-	}
+$output = array();
+$query .= "
+	SELECT complain.id as complain_id, complain.subject as complain_subject,
+	complain.description as complain_description, complain.contact_no as complain_contact_no,
+	complain.status as complain_status, complain.updated_at as complain_updated_at,
+	user_details.user_name as user_name FROM complain
+	LEFT JOIN user_details
+	ON complain.user_id = user_details.user_id
+";
 
-	if ($_POST['btn_action'] == 'fetch_single') {
-		$query = "
-		SELECT * FROM complain WHERE id = :id
-		";
-		$statement = $connect->prepare($query);
-		$statement->execute(
-			array(
-				':id' => $_POST["complain_id"],
-			)
-		);
-		$result = $statement->fetchAll();
-		foreach ($result as $row) {
-			$output['category_id'] = $row['category_id'];
-			$output['complain_name'] = $row['complain_name'];
-		}
-		echo json_encode($output);
-	}
-
-	if ($_POST['btn_action'] == 'Edit') {
-		$query = "
-		UPDATE complain set
-		category_id = :category_id,
-		complain_name = :complain_name
-		WHERE complain_id = :complain_id
-		";
-		$statement = $connect->prepare($query);
-		$statement->execute(
-			array(
-				':category_id' => $_POST["category_id"],
-				':complain_name' => $_POST["complain_name"],
-				':complain_id' => $_POST["complain_id"],
-			)
-		);
-		$result = $statement->fetchAll();
-		if (isset($result)) {
-			echo 'Complain Name Edited';
-		}
-	}
-
-	if ($_POST['btn_action'] == 'delete') {
-		$status = 'active';
-		if ($_POST['status'] == 'active') {
-			$status = 'inactive';
-		}
-		$query = "
-		UPDATE complain
-		SET complain_status = :complain_status
-		WHERE complain_id = :complain_id
-		";
-		$statement = $connect->prepare($query);
-		$statement->execute(
-			array(
-				':complain_status' => $status,
-				':complain_id' => $_POST["complain_id"],
-			)
-		);
-		$result = $statement->fetchAll();
-		if (isset($result)) {
-			echo 'Complain status change to ' . $status;
-		}
-	}
+if (isset($_POST["search"]["value"])) {
+	$query .= 'WHERE user_details.user_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+	$query .= 'OR complain.subject LIKE "%' . $_POST["search"]["value"] . '%" ';
+	$query .= 'OR complain.contact_no LIKE "%' . $_POST["search"]["value"] . '%" ';
 }
+
+if (isset($_POST["order"])) {
+	$query .= 'ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
+} else {
+	$query .= 'ORDER BY complain.updated_at DESC ';
+}
+
+if ($_POST["length"] != -1) {
+	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+}
+
+$statement = $connect->prepare($query);
+
+$statement->execute();
+
+$result = $statement->fetchAll();
+
+$data = array();
+
+$filtered_rows = $statement->rowCount();
+
+foreach ($result as $row) {
+	$status = '';
+	if ($row['complain_status'] == 'Solved') {
+		$status = '<span class="label label-success">Solved</span>';
+	} else {
+		$status = '<span class="label label-danger">Pending</span>';
+	}
+	$sub_array = array();
+	$sub_array[] = $row['complain_id'];
+	$sub_array[] = $row['complain_subject'];
+	$sub_array[] = $row['user_name'];
+	$sub_array[] = $row['complain_contact_no'];
+	$sub_array[] = $row['complain_updated_at'];
+	$sub_array[] = $status;
+	$sub_array[] = '<button type="button" name="update" id="' . $row["complain_id"] . '" class="btn btn-warning btn-xs update">Update</button>';
+	$sub_array[] = '<button type="button" name="delete" id="' . $row["complain_id"] . '" class="btn btn-danger btn-xs delete" data-status="' . $row["complain_status"] . '">Delete</button>';
+	$data[] = $sub_array;
+}
+
+function get_total_all_records($connect) {
+	$statement = $connect->prepare('SELECT * FROM complain');
+	$statement->execute();
+	return $statement->rowCount();
+}
+
+$output = array(
+	"draw" => intval($_POST["draw"]),
+	"recordsTotal" => $filtered_rows,
+	"recordsFiltered" => get_total_all_records($connect),
+	"data" => $data,
+);
+
+echo json_encode($output);
 
 ?>
