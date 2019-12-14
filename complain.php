@@ -36,11 +36,12 @@ include 'header.php';
 							<tr>
 								<th>ID</th>
 								<th>Subject</th>
-								<th>Description</th>
 								<th>User Name</th>
-								<th>User Organization</th>
 								<th>User Phone</th>
+								<th>Date</th>
 								<th>Status</th>
+								<th>Edit</th>
+								<th>Delete</th>
 							</tr>
 						</thead>
                 	</table>
@@ -116,7 +117,7 @@ $(document).ready(function(){
 				$('#complainModal').modal('hide');
 				$('#alert_action').fadeIn().html('<div class="alert alert-success">'+data+'</div>');
 				$('#action').attr('disabled', false);
-				branddataTable.ajax.reload();
+				complaindataTable.ajax.reload();
 			}
 		})
 	});
@@ -155,7 +156,7 @@ $(document).ready(function(){
 				success:function(data)
 				{
 					$('#alert_action').fadeIn().html('<div class="alert alert-info">'+data+'</div>');
-					branddataTable.ajax.reload();
+					complaindataTable.ajax.reload();
 				}
 			})
 		}
@@ -166,7 +167,7 @@ $(document).ready(function(){
 	});
 
 
-	var branddataTable = $('#complain_data').DataTable({
+	var complaindataTable = $('#complain_data').DataTable({
 		"processing":true,
 		"serverSide":true,
 		"order":[],
@@ -176,7 +177,7 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"targets":[4, 5],
+				"targets":[6, 7],
 				"orderable":false,
 			},
 		],
