@@ -16,8 +16,8 @@ if (isset($_POST['btn_action'])) {
 		$current_date = date('Y-m-d H:i:s');
 		$status = 'Pending';
 		$query = "
-		INSERT INTO complain (category_id, category_name, subject, description, contact_no, created_at, :updated_at, status)
-		VALUES (:category_id, :category_name, :subject, :description, :contact_no, :created_at, :updated_at :status)
+		INSERT INTO complain (category_id, category_name, subject, description, contact_no, created_at, updated_at, status)
+		VALUES (:category_id, :category_name, :subject, :description, :contact_no, :created_at, :updated_at, :status)
 		";
 		$statement = $connect->prepare($query);
 		$statement->execute(
@@ -40,12 +40,12 @@ if (isset($_POST['btn_action'])) {
 
 	if ($_POST['btn_action'] == 'fetch_single') {
 		$query = "
-		SELECT * FROM complain WHERE complain_id = :complain_id
+		SELECT * FROM complain WHERE id = :id
 		";
 		$statement = $connect->prepare($query);
 		$statement->execute(
 			array(
-				':complain_id' => $_POST["complain_id"],
+				':id' => $_POST["complain_id"],
 			)
 		);
 		$result = $statement->fetchAll();
