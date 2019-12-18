@@ -39,9 +39,9 @@ if (isset($_POST['btn_action'])) {
 		}
 	}
 
-	if ($_POST['btn_action'] == 'fetch_single') {
+	if ($_POST['btn_action'] == 'fetch_single_complain') {
 		$query = "
-		SELECT * FROM complain WHERE complain_id = :complain_id
+		SELECT * FROM complain WHERE id = :complain_id
 		";
 		$statement = $connect->prepare($query);
 		$statement->execute(
@@ -52,7 +52,9 @@ if (isset($_POST['btn_action'])) {
 		$result = $statement->fetchAll();
 		foreach ($result as $row) {
 			$output['category_id'] = $row['category_id'];
-			$output['complain_name'] = $row['complain_name'];
+			$output['subject'] = $row['subject'];
+			$output['description'] = $row['description'];
+			$output['contact_no'] = $row['contact_no'];
 		}
 		echo json_encode($output);
 	}
@@ -61,20 +63,32 @@ if (isset($_POST['btn_action'])) {
 		$query = "
 		UPDATE complain set
 		category_id = :category_id,
-		complain_name = :complain_name
-		WHERE complain_id = :complain_id
+		category_name = :category_name,
+		subject = :subject,
+		description = :description,
+		contact_no = :contact_no,
+		status = :status,
+		updated_at = :updated_at,
+		employee_id = :employee_id,
+		WHERE id = :complain_id
 		";
 		$statement = $connect->prepare($query);
 		$statement->execute(
 			array(
-				':category_id' => $_POST["category_id"],
-				':complain_name' => $_POST["complain_name"],
 				':complain_id' => $_POST["complain_id"],
+				':category_id' => $_POST["category_id"],
+				':category_name' => $category_name = getSingleValue($connect, 'category_name', 'category', 'category_id', $_POST["category_id"]),
+				':subject' => $_POST["subject"],
+				':description' => $_POST["description"],
+				':contact_no' => $_POST["contact_no"],
+				':status' => $_POST["status"],
+				':employee_id' => $_POST["employee_id"],
+				':updated_at' => date('Y-m-d H:i:s'),
 			)
 		);
 		$result = $statement->fetchAll();
 		if (isset($result)) {
-			echo 'Complain Name Edited';
+			echo 'Complain Information Updated';
 		}
 	}
 

@@ -56,8 +56,8 @@ foreach ($result as $row) {
 	$sub_array[] = $row['complain_contact_no'];
 	$sub_array[] = $row['complain_updated_at'];
 	$sub_array[] = $status;
-	$sub_array[] = '<button type="button" name="update" id="' . $row["complain_id"] . '" class="btn btn-warning btn-xs update">Update</button>';
-	$sub_array[] = '<button type="button" name="delete" id="' . $row["complain_id"] . '" class="btn btn-danger btn-xs delete" data-status="' . $row["complain_status"] . '">Delete</button>';
+	$sub_array[] = '<button type="button" name="update" id="' . $row['complain_id'] . '" class="btn btn-warning btn-xs update">Update</button>';
+	$sub_array[] = '<button type="button" name="delete" id="' . $row['complain_id'] . '" class="btn btn-danger btn-xs delete" data-status="' . $row["complain_status"] . '">Delete</button>';
 	$data[] = $sub_array;
 }
 

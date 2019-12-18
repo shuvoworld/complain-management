@@ -1,19 +1,12 @@
 <?php
-//brand.php
 include 'database_connection.php';
-
 include 'function.php';
 
 if (!isset($_SESSION['type'])) {
 	header('location:login.php');
 }
 
-if ($_SESSION['type'] != 'master') {
-	header('location:index.php');
-}
-
 include 'header.php';
-
 ?>
 
 	<span id="alert_action"></span>
@@ -26,7 +19,7 @@ include 'header.php';
                 			<h3 class="panel-title">Complain List</h3>
                 		</div>
                 		<div class="col-md-2" align="right">
-                			<button type="button" name="add" id="add_button" class="btn btn-success">Add</button>
+                			<button type="button" name="add" id="add_button" class="btn btn-success">Add Complain</button>
                 		</div>
                 	</div>
                 </div>
@@ -60,19 +53,19 @@ include 'header.php';
     				</div>
     				<div class="modal-body">
     					<div class="form-group">
-    						<select name="category_id" id="category_id" class="form-control" required>
-								<option value="">Select Category</option>
+    						<select name="category_id" id="category_id" class="form-control select" required>
+								<option value="">Select Complain Category</option>
 								<?php echo fill_category_list($connect); ?>
 							</select>
     					</div>
     					<div class="form-group">
 							<label>Enter Complain Subject</label>
-							<?php echo getSingleValue($connect, 'category_name', 'category', 'category_id', 4); ?>
+							<?php //echo getSingleValue($connect, 'category_name', 'category', 'category_id', 4); ?>
 							<input type="text" name="subject" id="subject" class="form-control" required />
 						</div>
 						<div class="form-group">
 							<label>Enter Complain Description</label>
-							<textarea class="md-textarea form-control" id="description" name="description" rows="4" cols="50">
+							<textarea class="md-textarea form-control editor" id="description" name="description" rows="4" cols="50">
 							</textarea>
 						</div>
 
@@ -80,6 +73,23 @@ include 'header.php';
 							<label>Emergency Contact to talk with</label>
 							<input type="text" name="contact_no" id="contact_no" class="form-control" required />
 						</div>
+						<?PHP if ($_SESSION["type"] == 'master') {?>
+						<div class="form-group">
+						<select name="employee_id" id="employee_id" class="form-control select">
+							<option value="">Assign A Staff</option>
+							<?php echo getDrodownFromTable('employee', $connect); ?>
+						</select>		
+						</div>
+						<?PHP }?>
+
+						<?PHP if ($_SESSION["type"] == 'master') {?>
+						<?php $status = array("" => "Select Complain Status", "Pending" => "Pending", "Solved" => "Solved");?>
+						<div class="form-group">
+						<select name="status" id="status" class="form-control select">
+							<?php echo getDropdownFromArray($status); ?>
+						</select>
+						</div>
+						<?PHP }?>
     				</div>
     				<div class="modal-footer">
     					<input type="hidden" name="complain_id" id="complain_id" />
@@ -124,7 +134,7 @@ $(document).ready(function(){
 
 	$(document).on('click', '.update', function(){
 		var complain_id = $(this).attr("id");
-		var btn_action = 'fetch_single';
+		var btn_action = 'fetch_single_complain';
 		$.ajax({
 			url:'complain_action.php',
 			method:"POST",
@@ -135,6 +145,10 @@ $(document).ready(function(){
 				$('#complainModal').modal('show');
 				$('#category_id').val(data.category_id);
 				$('#complain_name').val(data.complain_name);
+				$('#subject').val(data.subject);
+				$('#description').val(data.description);
+				$('#contact_no').val(data.contact_no);
+				$('#employee_id').val(data.employee_id);
 				$('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit Complain");
 				$('#complain_id').val(complain_id);
 				$('#action').val('Edit');
@@ -185,6 +199,7 @@ $(document).ready(function(){
 	});
 
 });
+
 </script>
 
 

@@ -10,6 +10,28 @@ function getSingleValue($connect, $columnName, $tableName, $property, $value) {
 	return $columnValue;
 }
 
+function getDropdownFromArray($arr) {
+	$output = '';
+	foreach ($arr as $key => $value) {
+		$output .= '<option value="' . $key . '">' . $value . '</option>';
+	}
+
+	return $output;
+}
+
+function getDrodownFromTable($table, $connect) {
+	$query = "SELECT * FROM $table";
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$output = '';
+	foreach($result as $row){
+		$output .= '<option value="' . $row["id"] . '">' . $row["name"] . '</option>';
+	}
+
+	return $output;
+}
+
 function fill_category_list($connect) {
 	$query = "
 	SELECT * FROM category
