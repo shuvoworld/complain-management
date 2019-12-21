@@ -2,6 +2,7 @@
 //user.php
 
 include('database_connection.php');
+include('function.php');
 
 if(!isset($_SESSION["type"]))
 {
@@ -39,8 +40,10 @@ include('header.php');
                    				<thead>
 									<tr>
 										<th>ID</th>
+										<th>Role</th>
 										<th>Email</th>
 										<th>Name</th>
+										<th>Organization</th>
 										<th>Status</th>
 										<th>Edit</th>
 										<th>Delete</th>
@@ -73,6 +76,21 @@ include('header.php');
 							<label>Enter User Password</label>
 							<input type="password" name="user_password" id="user_password" class="form-control" required />
 						</div>
+
+						<div class="form-group">
+						<select name="user_type_id" id="user_type_id" class="form-control select">
+							<option value="">Select User Type</option>
+							<?php echo getDrodownFromTable('user_types', $connect); ?>
+						</select>		
+						</div>
+
+						<div class="form-group">
+						<select name="client_id" id="client_id" class="form-control select">
+							<option value="">Select User Organization</option>
+							<?php echo getDrodownFromTable('client', $connect); ?>
+						</select>		
+						</div>
+
         			</div>
         			<div class="modal-footer">
         				<input type="hidden" name="user_id" id="user_id" />
@@ -105,7 +123,7 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"target":[4,5],
+				"target":[6,7],
 				"orderable":false
 			}
 		],
@@ -144,6 +162,8 @@ $(document).ready(function(){
 				$('#userModal').modal('show');
 				$('#user_name').val(data.user_name);
 				$('#user_email').val(data.user_email);
+				$('#user_type_id').select2().val('data.user_type_id')[0].text;
+				$('#client_id').val(data.client_id);
 				$('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit User");
 				$('#user_id').val(user_id);
 				$('#action').val('Edit');

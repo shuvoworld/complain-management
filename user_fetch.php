@@ -10,7 +10,7 @@ $output = array();
 
 $query .= "
 SELECT * FROM user_details 
-WHERE user_type = 'user' AND 
+WHERE user_type != 'master' AND 
 ";
 
 if(isset($_POST["search"]["value"]))
@@ -57,8 +57,10 @@ foreach($result as $row)
 	}
 	$sub_array = array();
 	$sub_array[] = $row['user_id'];
+	$sub_array[] = $row['user_type'];
 	$sub_array[] = $row['user_email'];
 	$sub_array[] = $row['user_name'];
+	$sub_array[] = $row['client_name'];
 	$sub_array[] = $status;
 	$sub_array[] = '<button type="button" name="update" id="'.$row["user_id"].'" class="btn btn-warning btn-xs update">Update</button>';
 	$sub_array[] = '<button type="button" name="delete" id="'.$row["user_id"].'" class="btn btn-danger btn-xs delete" data-status="'.$row["user_status"].'">Delete</button>';

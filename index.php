@@ -35,47 +35,23 @@ include('header.php');
 	</div>
 	<div class="col-md-3">
 		<div class="panel panel-default">
-			<div class="panel-heading"><strong>Total Brand</strong></div>
+			<div class="panel-heading"><strong>Total Employee</strong></div>
 			<div class="panel-body" align="center">
-				<h1><?php echo count_total_brand($connect); ?></h1>
+				<h1><?php echo count_total_employee($connect); ?></h1>
 			</div>
 		</div>
 	</div>
 	<div class="col-md-3">
 		<div class="panel panel-default">
-			<div class="panel-heading"><strong>Total Item in Stock</strong></div>
+			<div class="panel-heading"><strong>Total Tickets</strong></div>
 			<div class="panel-body" align="center">
-				<h1><?php echo count_total_product($connect); ?></h1>
+				<h1><?php echo count_total_tickets($connect); ?></h1>
 			</div>
 		</div>
 	</div>
 	<?php
 	}
 	?>
-		<div class="col-md-4">
-			<div class="panel panel-default">
-				<div class="panel-heading"><strong>Total Order Value</strong></div>
-				<div class="panel-body" align="center">
-					<h1>$<?php echo count_total_order_value($connect); ?></h1>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="panel panel-default">
-				<div class="panel-heading"><strong>Total Cash Order Value</strong></div>
-				<div class="panel-body" align="center">
-					<h1>$<?php echo count_total_cash_order_value($connect); ?></h1>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<div class="panel panel-default">
-				<div class="panel-heading"><strong>Total Credit Order Value</strong></div>
-				<div class="panel-body" align="center">
-					<h1>$<?php echo count_total_credit_order_value($connect); ?></h1>
-				</div>
-			</div>
-		</div>
 		<hr />
 		<?php
 		if($_SESSION['type'] == 'master')
@@ -83,9 +59,9 @@ include('header.php');
 		?>
 		<div class="col-md-12">
 			<div class="panel panel-default">
-				<div class="panel-heading"><strong>Total Order Value User wise</strong></div>
+				<div class="panel-heading"><strong>Total Pending Tickets Employee Wise</strong></div>
 				<div class="panel-body" align="center">
-					<?php echo get_user_wise_total_order($connect); ?>
+					<?php echo get_pending_ticketcount_employee_wise($connect); ?>
 				</div>
 			</div>
 		</div>

@@ -2,15 +2,16 @@
 
 //user_action.php
 
-include('database_connection.php');
+include 'database_connection.php';
+include 'function.php';
 
 if(isset($_POST['btn_action']))
 {
 	if($_POST['btn_action'] == 'Add')
 	{
 		$query = "
-		INSERT INTO user_details (user_email, user_password, user_name, user_type, user_status) 
-		VALUES (:user_email, :user_password, :user_name, :user_type, :user_status)
+		INSERT INTO user_details (user_email, user_password, user_name, user_type_id, user_type, user_status, client_id, client_name) 
+		VALUES (:user_email, :user_password, :user_name, :user_type_id, :user_type, :user_status, :client_id, :client_name)
 		";	
 		$statement = $connect->prepare($query);
 		$statement->execute(
@@ -18,8 +19,11 @@ if(isset($_POST['btn_action']))
 				':user_email'		=>	$_POST["user_email"],
 				':user_password'	=>	password_hash($_POST["user_password"], PASSWORD_DEFAULT),
 				':user_name'		=>	$_POST["user_name"],
-				':user_type'		=>	'user',
-				':user_status'		=>	'active'
+				':user_type_id'     =>  $_POST["user_type_id"],
+				':user_type'		=>	getSingleValue($connect, 'name', 'user_types', 'id', $_POST["user_type_id"]),
+				':user_status'		=>	'active',
+				':client_id'		=>	$_POST["client_id"],
+				':client_name'      =>  getSingleValue($connect, 'name', 'client', 'id', $_POST["client_id"])
 			)
 		);
 		$result = $statement->fetchAll();
@@ -44,6 +48,8 @@ if(isset($_POST['btn_action']))
 		{
 			$output['user_email'] = $row['user_email'];
 			$output['user_name'] = $row['user_name'];
+			$output['user_type_id'] = $row['user_type_id'];
+			$output['client_id'] = $row['client_id'];
 		}
 		echo json_encode($output);
 	}
@@ -55,6 +61,8 @@ if(isset($_POST['btn_action']))
 			UPDATE user_details SET 
 				user_name = '".$_POST["user_name"]."', 
 				user_email = '".$_POST["user_email"]."',
+				user_type_id = '".$_POST["user_type_id"]."',
+				client_id = '".$_POST["client_id"]."',
 				user_password = '".password_hash($_POST["user_password"], PASSWORD_DEFAULT)."' 
 				WHERE user_id = '".$_POST["user_id"]."'
 			";

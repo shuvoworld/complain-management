@@ -16,22 +16,32 @@ $query .= "
 	ON complain.user_id = user_details.user_id
 ";
 
+if(($_SESSION["type"] == 'employee')){
+	$query .= 'WHERE complain.employee_id = ' . $_SESSION["user_id"]; 
+	}
+elseif(($_SESSION["type"] == 'user')){
+	$query .= 'WHERE complain.user_id = ' . $_SESSION["user_id"]; 
+	}
+
 if (isset($_POST["search"]["value"])) {
-	$query .= 'WHERE user_details.user_name LIKE "%' . $_POST["search"]["value"] . '%" ';
+	$query .= ' AND (user_details.user_name LIKE "%' . $_POST["search"]["value"] . '%" ';
 	$query .= 'OR complain.subject LIKE "%' . $_POST["search"]["value"] . '%" ';
-	$query .= 'OR complain.contact_no LIKE "%' . $_POST["search"]["value"] . '%" ';
+	$query .= 'OR complain.contact_no LIKE "%' . $_POST["search"]["value"] . '%" )';
 }
 
+
+
 if (isset($_POST["order"])) {
-	$query .= 'ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
+	$query .= ' ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
 } else {
-	$query .= 'ORDER BY complain.updated_at DESC ';
+	$query .= ' ORDER BY complain.updated_at DESC ';
 }
 
 if ($_POST["length"] != -1) {
 	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
 
+//echo $query; die();
 $statement = $connect->prepare($query);
 
 $statement->execute();

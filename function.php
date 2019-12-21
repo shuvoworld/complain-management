@@ -10,9 +10,9 @@ function getSingleValue($connect, $columnName, $tableName, $property, $value) {
 	return $columnValue;
 }
 
-function getDropdownFromArray($arr) {
+function getDropdownFromArray($array) {
 	$output = '';
-	foreach ($arr as $key => $value) {
+	foreach ($array as $key => $value) {
 		$output .= '<option value="' . $key . '">' . $value . '</option>';
 	}
 
@@ -152,18 +152,18 @@ function count_total_category($connect) {
 	return $statement->rowCount();
 }
 
-function count_total_brand($connect) {
+function count_total_employee($connect) {
 	$query = "
-	SELECT * FROM brand WHERE brand_status='active'
+	SELECT * FROM employee
 	";
 	$statement = $connect->prepare($query);
 	$statement->execute();
 	return $statement->rowCount();
 }
 
-function count_total_product($connect) {
+function count_total_tickets($connect) {
 	$query = "
-	SELECT * FROM product WHERE product_status='active'
+	SELECT * FROM complain
 	";
 	$statement = $connect->prepare($query);
 	$statement->execute();
@@ -270,4 +270,42 @@ function get_user_wise_total_order($connect) {
 	return $output;
 }
 
+function get_pending_ticketcount_employee_wise($connect) {
+	$query = '
+	SELECT
+	employee.`name` as employee_name,
+	COUNT( complain.id ) AS pending 
+FROM
+	`complain`
+	LEFT JOIN employee ON complain.employee_id = employee.id 
+WHERE
+	complain.`status` = "Pending" 
+GROUP BY
+	complain.employee_id
+	';
+	$statement = $connect->prepare($query);
+	$statement->execute();
+	$result = $statement->fetchAll();
+	$output = '
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped">
+			<tr>
+				<th>Employee Name</th>
+				<th>Current Pending Ticket</th>				
+			</tr>
+	';
+
+	foreach ($result as $row) {
+		$output .= '
+		<tr>
+			<td>' . $row['employee_name'] . '</td>
+			<td align="right"><b>' . $row["pending"] . '</b></td>
+		</tr>
+		';
+
+		
+	}
+	$output .= '</table></div>';
+	return $output;
+}
 ?>

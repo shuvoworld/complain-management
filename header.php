@@ -31,14 +31,11 @@ if ($_SESSION['type'] == 'master') {
 	?>
 				<li><a href="user.php">User</a></li>
 				<li><a href="category.php">Category</a></li>
-				<li><a href="brand.php">Brand</a></li>
-				<li><a href="product.php">Product</a></li>
 				<li><a href="client.php">Client</a></li>
 				<li><a href="employee.php">Employee</a></li>
 			<?php
 }
 ?>
-				<li><a href="order.php">Order</a></li>
 				<li><a href="complain.php">Complain</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
