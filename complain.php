@@ -143,7 +143,7 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$('#complainModal').modal('show');
-				$('#category_id').val(data.category_id);
+				$('#category_id').val(data.category_id).trigger('change');
 				$('#complain_name').val(data.complain_name);
 				$('#subject').val(data.subject);
 				$('#description').val(data.description);

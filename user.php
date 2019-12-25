@@ -162,8 +162,8 @@ $(document).ready(function(){
 				$('#userModal').modal('show');
 				$('#user_name').val(data.user_name);
 				$('#user_email').val(data.user_email);
-				$('#user_type_id').select2().val('data.user_type_id')[0].text;
-				$('#client_id').val(data.client_id);
+				$('#user_type_id').val(data.user_type_id).trigger('change');
+				$('#client_id').val(data.client_id).trigger('change');
 				$('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit User");
 				$('#user_id').val(user_id);
 				$('#action').val('Edit');
