@@ -3,7 +3,7 @@ include 'database_connection.php';
 include 'function.php';
 
 if (!isset($_SESSION['type'])) {
-	header('location:login.php');
+    header('location:login.php');
 }
 
 include 'header.php';
@@ -31,6 +31,7 @@ include 'header.php';
 								<th>Subject</th>
 								<th>User Name</th>
 								<th>User Phone</th>
+								<th>Assigned Employee</th>
 								<th>Date</th>
 								<th>Status</th>
 								<th>Edit</th>
@@ -60,7 +61,7 @@ include 'header.php';
     					</div>
     					<div class="form-group">
 							<label>Enter Complain Subject</label>
-							<?php //echo getSingleValue($connect, 'category_name', 'category', 'category_id', 4); ?>
+							<?php //echo getSingleValue($connect, 'category_name', 'category', 'category_id', 4);?>
 							<input type="text" name="subject" id="subject" class="form-control" required />
 						</div>
 						<div class="form-group">
@@ -73,26 +74,26 @@ include 'header.php';
 							<label>Emergency Contact to talk with</label>
 							<input type="text" name="contact_no" id="contact_no" class="form-control" required />
 						</div>
-						<?PHP if ($_SESSION["type"] == 'master') {?>
+						<?php if ($_SESSION["type"] == 'master') {?>
 						<div class="form-group">
-						<select name="employee_id" id="employee_id" class="form-control select">
+						<select name="employee_id" id="employee_id" class="form-control">
 							<option value="">Assign A Staff</option>
 							<?php echo getDrodownFromTable('employee', $connect); ?>
-						</select>		
+						</select>
 						</div>
-						<?PHP }?>
+						<?php }?>
 
-						<?PHP if ($_SESSION["type"] == 'master') {?>
+						<?php if ($_SESSION["type"] == 'master') {?>
 						<?php $status = array("" => "Select Complain Status", "Pending" => "Pending", "Solved" => "Solved");?>
 						<div class="form-group">
-						<select name="status" id="status" class="form-control select">
+						<select name="status" id="status" class="form-control">
 							<?php echo getDropdownFromArray($status); ?>
 						</select>
 						</div>
-						<?PHP }?>
+						<?php }?>
     				</div>
     				<div class="modal-footer">
-    					<input type="hidden" name="complain_id" id="complain_id" />
+    					<input type="hidden" name="id" id="id" />
     					<input type="hidden" name="btn_action" id="btn_action" />
     					<input type="submit" name="action" id="action" class="btn btn-info" value="Add" />
     					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -133,12 +134,12 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click', '.update', function(){
-		var complain_id = $(this).attr("id");
+		var id = $(this).attr("id");
 		var btn_action = 'fetch_single_complain';
 		$.ajax({
 			url:'complain_action.php',
 			method:"POST",
-			data:{complain_id:complain_id, btn_action:btn_action},
+			data:{id:id, btn_action:btn_action},
 			dataType:"json",
 			success:function(data)
 			{
@@ -148,9 +149,10 @@ $(document).ready(function(){
 				$('#subject').val(data.subject);
 				$('#description').val(data.description);
 				$('#contact_no').val(data.contact_no);
+				$('#status').val(data.status);
 				$('#employee_id').val(data.employee_id);
 				$('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit Complain");
-				$('#complain_id').val(complain_id);
+				$('#id').val(id);
 				$('#action').val('Edit');
 				$('#btn_action').val('Edit');
 			}
@@ -191,7 +193,7 @@ $(document).ready(function(){
 		},
 		"columnDefs":[
 			{
-				"targets":[6, 7],
+				"targets":[7, 8],
 				"orderable":false,
 			},
 		],

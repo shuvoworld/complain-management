@@ -1,7 +1,7 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost
+ Source Server         : Localhost
  Source Server Type    : MySQL
  Source Server Version : 100406
  Source Host           : localhost:3306
@@ -11,7 +11,7 @@
  Target Server Version : 100406
  File Encoding         : 65001
 
- Date: 12/12/2019 15:59:58
+ Date: 25/12/2019 12:13:24
 */
 
 SET NAMES utf8mb4;
@@ -65,24 +65,16 @@ CREATE TABLE `category`  (
   `category_name` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `category_status` enum('active','inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of category
 -- ----------------------------
-INSERT INTO `category` VALUES (1, 'LED Bulb', 'active');
-INSERT INTO `category` VALUES (2, 'LED Lights', 'active');
-INSERT INTO `category` VALUES (3, 'LED Down Lights', 'active');
-INSERT INTO `category` VALUES (4, 'LED Panel Light', 'active');
-INSERT INTO `category` VALUES (5, 'LED Lamp', 'active');
-INSERT INTO `category` VALUES (6, 'LED Concealed Light', 'active');
-INSERT INTO `category` VALUES (7, 'LED Spot Light', 'active');
-INSERT INTO `category` VALUES (8, 'LED Ceiling Light', 'active');
-INSERT INTO `category` VALUES (9, 'LED Tube Light', 'active');
-INSERT INTO `category` VALUES (10, 'LED Driver', 'active');
-INSERT INTO `category` VALUES (11, 'Led Floods Light', 'active');
-INSERT INTO `category` VALUES (13, 'LED Outdoor Lighting', 'active');
-INSERT INTO `category` VALUES (14, 'LED Indoor Lights', 'active');
+INSERT INTO `category` VALUES (1, 'Printer', 'active');
+INSERT INTO `category` VALUES (2, 'Scanner', 'active');
+INSERT INTO `category` VALUES (3, 'Desktop', 'active');
+INSERT INTO `category` VALUES (4, 'Laptop', 'active');
+INSERT INTO `category` VALUES (5, 'Internet', 'active');
 
 -- ----------------------------
 -- Table structure for client
@@ -93,26 +85,12 @@ CREATE TABLE `client`  (
   `name` varchar(250) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `status` enum('active','inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of client
 -- ----------------------------
-INSERT INTO `client` VALUES (1, 'LED Bulb', 'active');
-INSERT INTO `client` VALUES (2, 'LED Lights', 'active');
-INSERT INTO `client` VALUES (3, 'LED Down Lights', 'active');
-INSERT INTO `client` VALUES (4, 'LED Panel Light', 'active');
-INSERT INTO `client` VALUES (5, 'LED Lamp', 'active');
-INSERT INTO `client` VALUES (6, 'LED Concealed Light', 'active');
-INSERT INTO `client` VALUES (7, 'LED Spot Light', 'active');
-INSERT INTO `client` VALUES (8, 'LED Ceiling Light', 'active');
-INSERT INTO `client` VALUES (9, 'LED Tube Light', 'active');
-INSERT INTO `client` VALUES (10, 'LED Driver', 'active');
-INSERT INTO `client` VALUES (11, 'Led Floods Light', 'active');
-INSERT INTO `client` VALUES (13, 'LED Outdoor Lighting', 'active');
-INSERT INTO `client` VALUES (14, 'LED Indoor Lights', 'active');
-INSERT INTO `client` VALUES (15, 'abcd', 'active');
-INSERT INTO `client` VALUES (16, 'Ronju', 'active');
+INSERT INTO `client` VALUES (1, 'Ministry of Women and Children Affairs (MoWCA)', 'active');
 
 -- ----------------------------
 -- Table structure for complain
@@ -127,7 +105,7 @@ CREATE TABLE `complain`  (
   `contact_no` varchar(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `user_id` int(20) NULL DEFAULT NULL,
   `employee_id` int(20) NULL DEFAULT NULL,
-  `status` enum('Pending','Solved') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
+  `status` enum('','Pending','Solved') CHARACTER SET utf8 COLLATE utf8_unicode_ci NULL DEFAULT NULL,
   `created_at` datetime(0) NULL DEFAULT NULL,
   `updated_at` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -136,8 +114,8 @@ CREATE TABLE `complain`  (
 -- ----------------------------
 -- Records of complain
 -- ----------------------------
-INSERT INTO `complain` VALUES (1, 8, 'LED Ceiling Light', 'ghghg', '							hghgh', '45454545', NULL, NULL, NULL, '2019-12-12 09:10:02', NULL);
-INSERT INTO `complain` VALUES (2, 6, 'LED Concealed Light', 'sdsdsd', '					sdsdsd		', 'sdsdsds', NULL, NULL, 'Pending', '2019-12-12 09:11:28', NULL);
+INSERT INTO `complain` VALUES (1, 5, 'Internet', 'yr', 'tryrtyrty', '010101010', 1, NULL, 'Pending', '2019-12-21 18:12:55', '2019-12-21 18:12:55');
+INSERT INTO `complain` VALUES (2, 5, 'Internet', 'Speed low', 'My speed is very low', '01675000148', 1, NULL, 'Pending', '2019-12-25 05:40:17', '2019-12-25 05:40:17');
 
 -- ----------------------------
 -- Table structure for employee
@@ -151,14 +129,12 @@ CREATE TABLE `employee`  (
   `department_id` int(10) NULL DEFAULT NULL,
   `status` enum('engaged','free','inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of employee
 -- ----------------------------
-INSERT INTO `employee` VALUES (1, 'Rashed', '01400664953', 'rashed@itsupport.com', 1, 'engaged');
-INSERT INTO `employee` VALUES (2, 'dwa', '012323232323', 'admin@admin.com', NULL, 'inactive');
-INSERT INTO `employee` VALUES (3, 'rssdsds', '09877668787', 'admin@admin.com', NULL, 'inactive');
+INSERT INTO `employee` VALUES (1, 'Rashed', '01400664953', 'rashed@support.com', NULL, 'free');
 
 -- ----------------------------
 -- Table structure for inventory_order
@@ -327,24 +303,29 @@ CREATE TABLE `user_details`  (
   `user_password` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `user_name` varchar(200) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `user_type_id` int(11) NULL DEFAULT NULL,
-  `user_type` enum('master','user') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `user_type` varchar(10) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `user_status` enum('Active','Inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `user_phone` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `client_id` int(10) NULL DEFAULT NULL,
+  `client_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_details
 -- ----------------------------
-INSERT INTO `user_details` VALUES (1, 'john_smith@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'John Smith', NULL, 'master', 'Active', NULL, NULL);
-INSERT INTO `user_details` VALUES (2, 'donahuber@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Dona L. Huber', NULL, 'user', 'Active', NULL, NULL);
-INSERT INTO `user_details` VALUES (3, 'roy_hise@gmail.com', '$2y$10$XlyVI9an5B6rHW3SS9vQpesJssKJxzMQYPbSaR7dnpWjDI5fpxJSS', 'Roy Hise', NULL, 'user', 'Active', NULL, NULL);
-INSERT INTO `user_details` VALUES (4, 'peter_goad@gmail.com', '$2y$10$n1B.FdHNwufTkmzp/pNqc.EiwjB8quQ1tBCEC7nkaldI5pS.et04e', 'Peter Goad', NULL, 'user', 'Active', NULL, NULL);
-INSERT INTO `user_details` VALUES (5, 'sarah_thomas@gmail.com', '$2y$10$s57SErOPlgkIZf1lxzlX3.hMt8LSSKaYig5rusxghDm7LW8RtQc/W', 'Sarah Thomas', NULL, 'user', 'Active', NULL, NULL);
-INSERT INTO `user_details` VALUES (6, 'edna_william@gmail.com', '$2y$10$mfMXnH.TCmg5tlYRhqjxu.ILly8s9.qsLKOpyxgUl6h1fZt6x/B5C', 'Edna William', NULL, 'user', 'Active', NULL, NULL);
-INSERT INTO `user_details` VALUES (8, 'john_parks@gmail.com', '$2y$10$WtsZUxIIz/N4NoIW0Db.pu0VfLWcPs6TyQ8SkpVHLDLGhdNOfALC.', 'John Park', NULL, 'user', 'Active', NULL, NULL);
-INSERT INTO `user_details` VALUES (10, 'peter_parker@gmail.com', '$2y$10$GoQvEZNTWEibo0FPK7h57eA5UsNkXfIdex1deGsW/CFIY8zqxyu2S', 'Mark Parker', NULL, 'user', 'Active', NULL, NULL);
+INSERT INTO `user_details` VALUES (1, 'admin@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Admin', 1, 'master', 'Active', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (2, 'test_user@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Test User 001', 3, 'user', 'Active', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (3, 'employee@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Roy Hise', 2, 'user', 'Active', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (11, 'test_user2@gmail.com', '$2y$10$90OR5Xq7kWI7ICn9JEKNGOir6N.dptKcXS.UlBZ2FUCAaHJmXKJiy', 'Test User 002', 3, 'user', 'Active', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (12, 'ict@mowca.gov.bd', '$2y$10$VtvTiTiGcnXIr9Z7n4656uTFjR2yF2a3.6eRT3dZJn/QdUJJgmfam', 'Enamul Haque', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
+INSERT INTO `user_details` VALUES (13, 'employee2@dd.com', '$2y$10$eBr/M.CP2etZ2L8hch/9ZOOJJplYNJIz91zimB9HMHDgZOBAbePzS', 'Employee 02', 2, '', 'Active', NULL, 0, '');
+INSERT INTO `user_details` VALUES (14, 'dfd@ddf.vom', '$2y$10$DG3QCBAXM9hoDeD1Lix9O.TLUMMm5TdY0YVlc63NSyKmiEzAigJmS', 'dfd', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
+INSERT INTO `user_details` VALUES (15, 'hgh@dfdf.nmn', '$2y$10$n/FK/iVg9.t1UisrMMMn7.lUFgpyauc5nX6w5f.hx5s/JymszFZeG', 'Roy Hise', 2, '', 'Active', NULL, 0, '');
+INSERT INTO `user_details` VALUES (16, 'sdsd@sdsd.com', '$2y$10$5Y5CmanCHkhtqFJCeb/bfei6mj3msg0XnU22Lj5eVfyyEVw..xrs6', 'sdsd', 3, '', 'Inactive', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
+INSERT INTO `user_details` VALUES (17, 'test@test.com', '$2y$10$RjgBzGR7aSOcGPtCmH8WPeRYbHLOKDA8rAbC6W4c4/J/62MrvIXUu', 'Test', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
+INSERT INTO `user_details` VALUES (18, 'sdsd@sds.com', '$2y$10$wJne68TxScy.yeMo5fJOzOeq7Ew0OhhQwbpL7h9.pWHevNE7HXYpe', 'sdsd', 2, '', 'Active', NULL, 0, '');
+INSERT INTO `user_details` VALUES (19, 'test@gmail.com', '$2y$10$mbL.sP6ji9SlTXIXLaPMhe.IX3YJlUtn0WkSmKBsxOK.KmsBz1SVK', 'test', 2, 'employee', 'Active', NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for user_types
