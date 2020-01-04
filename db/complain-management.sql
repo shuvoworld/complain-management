@@ -11,7 +11,7 @@
  Target Server Version : 100406
  File Encoding         : 65001
 
- Date: 25/12/2019 12:13:24
+ Date: 04/01/2020 20:28:01
 */
 
 SET NAMES utf8mb4;
@@ -74,7 +74,7 @@ INSERT INTO `category` VALUES (1, 'Printer', 'active');
 INSERT INTO `category` VALUES (2, 'Scanner', 'active');
 INSERT INTO `category` VALUES (3, 'Desktop', 'active');
 INSERT INTO `category` VALUES (4, 'Laptop', 'active');
-INSERT INTO `category` VALUES (5, 'Internet', 'active');
+INSERT INTO `category` VALUES (5, 'Internet and Cable', 'active');
 
 -- ----------------------------
 -- Table structure for client
@@ -109,13 +109,17 @@ CREATE TABLE `complain`  (
   `created_at` datetime(0) NULL DEFAULT NULL,
   `updated_at` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of complain
 -- ----------------------------
-INSERT INTO `complain` VALUES (1, 5, 'Internet', 'yr', 'tryrtyrty', '010101010', 1, NULL, 'Pending', '2019-12-21 18:12:55', '2019-12-21 18:12:55');
-INSERT INTO `complain` VALUES (2, 5, 'Internet', 'Speed low', 'My speed is very low', '01675000148', 1, NULL, 'Pending', '2019-12-25 05:40:17', '2019-12-25 05:40:17');
+INSERT INTO `complain` VALUES (1, 5, 'Internet and Cable', 'yr', 'tryrtyrty', '010101010', 1, 1, 'Pending', '2019-12-21 18:12:55', '2020-01-03 08:21:11');
+INSERT INTO `complain` VALUES (2, 5, 'Internet and Cable', 'Speed low', 'My speed is very low', '01675000148', 1, 2, 'Solved', '2019-12-25 05:40:17', '2020-01-04 15:13:04');
+INSERT INTO `complain` VALUES (3, 2, 'Scanner', 'Speed low', '', '252525252', 1, 1, 'Pending', '2020-01-02 20:24:54', '2020-01-03 08:20:58');
+INSERT INTO `complain` VALUES (4, 1, 'Printer', 'sdsd', 'sdsd', '232323', 1, 2, 'Solved', '2020-01-02 20:30:30', '2020-01-04 15:21:38');
+INSERT INTO `complain` VALUES (5, 4, 'Laptop', 'sasas', 'dfdfd', '343434', 1, 1, 'Solved', '2020-01-02 20:32:44', '2020-01-03 07:46:36');
+INSERT INTO `complain` VALUES (6, 5, 'Internet and Cable', 'sdsdsd', 'sds', '11111111111', 1, 2, 'Solved', '2020-01-04 14:35:49', '2020-01-04 15:12:41');
 
 -- ----------------------------
 -- Table structure for employee
@@ -129,12 +133,13 @@ CREATE TABLE `employee`  (
   `department_id` int(10) NULL DEFAULT NULL,
   `status` enum('engaged','free','inactive') CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of employee
 -- ----------------------------
 INSERT INTO `employee` VALUES (1, 'Rashed', '01400664953', 'rashed@support.com', NULL, 'free');
+INSERT INTO `employee` VALUES (2, 'Habib', '0126653235', 'habib@gmail.com', NULL, 'free');
 
 -- ----------------------------
 -- Table structure for inventory_order
@@ -308,24 +313,27 @@ CREATE TABLE `user_details`  (
   `user_phone` varchar(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `client_id` int(10) NULL DEFAULT NULL,
   `client_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `employee_id` int(10) NULL DEFAULT NULL,
+  `employee_name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `updated_at` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_details
 -- ----------------------------
-INSERT INTO `user_details` VALUES (1, 'admin@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Admin', 1, 'master', 'Active', NULL, NULL, NULL);
-INSERT INTO `user_details` VALUES (2, 'test_user@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Test User 001', 3, 'user', 'Active', NULL, NULL, NULL);
-INSERT INTO `user_details` VALUES (3, 'employee@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Roy Hise', 2, 'user', 'Active', NULL, NULL, NULL);
-INSERT INTO `user_details` VALUES (11, 'test_user2@gmail.com', '$2y$10$90OR5Xq7kWI7ICn9JEKNGOir6N.dptKcXS.UlBZ2FUCAaHJmXKJiy', 'Test User 002', 3, 'user', 'Active', NULL, NULL, NULL);
-INSERT INTO `user_details` VALUES (12, 'ict@mowca.gov.bd', '$2y$10$VtvTiTiGcnXIr9Z7n4656uTFjR2yF2a3.6eRT3dZJn/QdUJJgmfam', 'Enamul Haque', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
-INSERT INTO `user_details` VALUES (13, 'employee2@dd.com', '$2y$10$eBr/M.CP2etZ2L8hch/9ZOOJJplYNJIz91zimB9HMHDgZOBAbePzS', 'Employee 02', 2, '', 'Active', NULL, 0, '');
-INSERT INTO `user_details` VALUES (14, 'dfd@ddf.vom', '$2y$10$DG3QCBAXM9hoDeD1Lix9O.TLUMMm5TdY0YVlc63NSyKmiEzAigJmS', 'dfd', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
-INSERT INTO `user_details` VALUES (15, 'hgh@dfdf.nmn', '$2y$10$n/FK/iVg9.t1UisrMMMn7.lUFgpyauc5nX6w5f.hx5s/JymszFZeG', 'Roy Hise', 2, '', 'Active', NULL, 0, '');
-INSERT INTO `user_details` VALUES (16, 'sdsd@sdsd.com', '$2y$10$5Y5CmanCHkhtqFJCeb/bfei6mj3msg0XnU22Lj5eVfyyEVw..xrs6', 'sdsd', 3, '', 'Inactive', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
-INSERT INTO `user_details` VALUES (17, 'test@test.com', '$2y$10$RjgBzGR7aSOcGPtCmH8WPeRYbHLOKDA8rAbC6W4c4/J/62MrvIXUu', 'Test', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)');
-INSERT INTO `user_details` VALUES (18, 'sdsd@sds.com', '$2y$10$wJne68TxScy.yeMo5fJOzOeq7Ew0OhhQwbpL7h9.pWHevNE7HXYpe', 'sdsd', 2, '', 'Active', NULL, 0, '');
-INSERT INTO `user_details` VALUES (19, 'test@gmail.com', '$2y$10$mbL.sP6ji9SlTXIXLaPMhe.IX3YJlUtn0WkSmKBsxOK.KmsBz1SVK', 'test', 2, 'employee', 'Active', NULL, 0, '');
+INSERT INTO `user_details` VALUES (1, 'admin@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Admin', 1, 'master', 'Active', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (2, 'test_user@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Test User 001', 3, 'user', 'Active', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (3, 'employee@gmail.com', '$2y$10$0Yo2F.EetL3yhB8l6MNvcOH8AYNS0SuXLOoAQr1qXJa3uPASWV0NC', 'Roy Hise', 2, 'user', 'Active', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (11, 'test_user2@gmail.com', '$2y$10$90OR5Xq7kWI7ICn9JEKNGOir6N.dptKcXS.UlBZ2FUCAaHJmXKJiy', 'Test User 002', 3, 'user', 'Active', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (12, 'ict@mowca.gov.bd', '$2y$10$VtvTiTiGcnXIr9Z7n4656uTFjR2yF2a3.6eRT3dZJn/QdUJJgmfam', 'Enamul Haque', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (13, 'employee2@dd.com', '$2y$10$eBr/M.CP2etZ2L8hch/9ZOOJJplYNJIz91zimB9HMHDgZOBAbePzS', 'Employee 02', 2, '', 'Active', NULL, 0, '', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (14, 'dfd@ddf.vom', '$2y$10$DG3QCBAXM9hoDeD1Lix9O.TLUMMm5TdY0YVlc63NSyKmiEzAigJmS', 'dfd', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (15, 'hgh@dfdf.nmn', '$2y$10$n/FK/iVg9.t1UisrMMMn7.lUFgpyauc5nX6w5f.hx5s/JymszFZeG', 'Roy Hise', 2, '', 'Active', NULL, 0, '', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (16, 'sdsd@sdsd.com', '$2y$10$5Y5CmanCHkhtqFJCeb/bfei6mj3msg0XnU22Lj5eVfyyEVw..xrs6', 'sdsd', 3, '', 'Inactive', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (17, 'test@test.com', '$2y$10$RjgBzGR7aSOcGPtCmH8WPeRYbHLOKDA8rAbC6W4c4/J/62MrvIXUu', 'Test', 3, 'user', 'Active', NULL, 1, 'Ministry of Women and Children Affairs (MoWCA)', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (18, 'sdsd@sds.com', '$2y$10$wJne68TxScy.yeMo5fJOzOeq7Ew0OhhQwbpL7h9.pWHevNE7HXYpe', 'sdsd', 2, '', 'Active', NULL, 0, '', NULL, NULL, NULL);
+INSERT INTO `user_details` VALUES (19, 'habib@gmail.com', '$2y$10$RJwOwMONnQ7MdBK8gBRF5.ntlsAGHildG1EExv.WkzzPqKfzDKbRC', 'Habib', 2, 'employee', 'Active', NULL, 0, '', 2, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for user_types

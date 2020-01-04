@@ -4,13 +4,14 @@
 
 include 'database_connection.php';
 include 'function.php';
-if (isset($_SESSION['employee_id'])) {
-    $employee_id = $_SESSION['employee_id'];
-} else {
-    $employee_id = $_POST['employee_id'];
-}
+
 if (isset($_POST['btn_action'])) {
     if ($_POST['btn_action'] == 'Add') {
+        if (isset($_SESSION['employee_id'])) {
+            $employee_id = $_SESSION['employee_id'];
+        } else {
+            $employee_id = $_POST['employee_id'];
+        }
         $category_id = $_POST["category_id"];
         $category_name = getSingleValue($connect, 'category_name', 'category', 'category_id', $_POST["category_id"]);
         $subject = $_POST["subject"];
@@ -66,6 +67,11 @@ if (isset($_POST['btn_action'])) {
     }
 
     if ($_POST['btn_action'] == 'Edit') {
+        if (isset($_SESSION['employee_id'])) {
+            $employee_id = $_SESSION['employee_id'];
+        } else {
+            $employee_id = $_POST['employee_id'];
+        }
         $category_name = getSingleValue($connect, 'category_name', 'category', 'category_id', $_POST["category_id"]);
         $query = "
 		UPDATE complain SET
