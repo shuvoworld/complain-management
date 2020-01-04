@@ -4,7 +4,11 @@
 
 include 'database_connection.php';
 include 'function.php';
-
+if (isset($_SESSION['employee_id'])) {
+    $employee_id = $_SESSION['employee_id'];
+} else {
+    $employee_id = $_POST['employee_id'];
+}
 if (isset($_POST['btn_action'])) {
     if ($_POST['btn_action'] == 'Add') {
         $category_id = $_POST["category_id"];
@@ -27,7 +31,7 @@ if (isset($_POST['btn_action'])) {
                 ':description' => $description,
                 ':contact_no' => $contact_no,
                 ':user_id' => $_SESSION["user_id"],
-                ':employee_id' => $_POST["employee_id"],
+                ':employee_id' => $employee_id,
                 ':status' => $status,
                 ':created_at' => $current_date,
                 ':updated_at' => $current_date,
@@ -84,7 +88,7 @@ if (isset($_POST['btn_action'])) {
                 ':description' => $_POST["description"],
                 ':contact_no' => $_POST["contact_no"],
                 ':status' => $_POST["status"],
-                ':employee_id' => $_POST["employee_id"],
+                ':employee_id' => $employee_id,
                 ':updated_at' => date('Y-m-d H:i:s'),
                 ':id' => $_POST["id"]
             )

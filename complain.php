@@ -54,7 +54,7 @@ include 'header.php';
     				</div>
     				<div class="modal-body">
     					<div class="form-group">
-    						<select name="category_id" id="category_id" class="form-control select" required>
+    						<select name="category_id" id="category_id" class="form-control" required>
 								<option value="">Select Complain Category</option>
 								<?php echo fill_category_list($connect); ?>
 							</select>
@@ -83,7 +83,7 @@ include 'header.php';
 						</div>
 						<?php }?>
 
-						<?php if ($_SESSION["type"] == 'master') {?>
+						<?php if ($_SESSION["type"] == 'master' || $_SESSION['type'] == 'employee') {?>
 						<?php $status = array("" => "Select Complain Status", "Pending" => "Pending", "Solved" => "Solved");?>
 						<div class="form-group">
 						<select name="status" id="status" class="form-control">

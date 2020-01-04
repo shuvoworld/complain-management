@@ -1,22 +1,17 @@
 <?php
 //user.php
-
 include('database_connection.php');
 include('function.php');
 
-if(!isset($_SESSION["type"]))
-{
-	header('location:login.php');
+if (!isset($_SESSION["type"])) {
+    header('location:login.php');
 }
 
-if($_SESSION["type"] != 'master')
-{
-	header("location:index.php");
+if ($_SESSION["type"] != 'master') {
+    header("location:index.php");
 }
 
 include('header.php');
-
-
 ?>
 		<span id="alert_action"></span>
 		<div class="row">
@@ -31,23 +26,23 @@ include('header.php');
                             	<button type="button" name="add" id="add_button" data-toggle="modal" data-target="#userModal" class="btn btn-success btn-xs">Add</button>
                         	</div>
                         </div>
-                       
+
                         <div class="clear:both"></div>
                    	</div>
                    	<div class="panel-body">
                    		<div class="row"><div class="col-sm-12 table-responsive">
                    			<table id="user_data" class="table table-bordered table-striped">
                    				<thead>
-									<tr>
-										<th>ID</th>
-										<th>Role</th>
-										<th>Email</th>
-										<th>Name</th>
-										<th>Organization</th>
-										<th>Status</th>
-										<th>Edit</th>
-										<th>Delete</th>
-									</tr>
+													<tr>
+														<th>ID</th>
+														<th>Role</th>
+														<th>Email</th>
+														<th>Name</th>
+														<th>Organization</th>
+														<th>Status</th>
+														<th>Edit</th>
+														<th>Delete</th>
+													</tr>
 								</thead>
                    			</table>
                    		</div>
@@ -78,17 +73,24 @@ include('header.php');
 						</div>
 
 						<div class="form-group">
-						<select name="user_type_id" id="user_type_id" class="form-control select">
+						<select name="user_type_id" id="user_type_id" class="form-control">
 							<option value="">Select User Type</option>
 							<?php echo getDrodownFromTable('user_types', $connect); ?>
-						</select>		
+						</select>
 						</div>
 
 						<div class="form-group">
-						<select name="client_id" id="client_id" class="form-control select">
+						<select name="client_id" id="client_id" class="form-control">
 							<option value="">Select User Organization</option>
 							<?php echo getDrodownFromTable('client', $connect); ?>
-						</select>		
+						</select>
+						</div>
+
+						<div class="form-group">
+						<select name="employee_id" id="employee_id" class="form-control">
+							<option value="">Select Employee</option>
+							<?php echo getDrodownFromTable('employee', $connect); ?>
+						</select>
 						</div>
 
         			</div>
@@ -164,6 +166,7 @@ $(document).ready(function(){
 				$('#user_email').val(data.user_email);
 				$('#user_type_id').val(data.user_type_id).trigger('change');
 				$('#client_id').val(data.client_id).trigger('change');
+				$('#employee_id').val(data.employee_id).trigger('change');
 				$('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit User");
 				$('#user_id').val(user_id);
 				$('#action').val('Edit');

@@ -17,7 +17,7 @@ $query .= "
 ";
 
 if (($_SESSION["type"] == 'employee')) {
-    $query .= 'WHERE complain.employee_id = ' . $_SESSION["user_id"];
+    $query .= 'WHERE complain.employee_id = ' . $_SESSION["employee_id"];
 } elseif (($_SESSION["type"] == 'user')) {
     $query .= 'WHERE complain.user_id = ' . $_SESSION["user_id"];
 }
