@@ -3,7 +3,7 @@ include 'database_connection.php';
 include 'function.php';
 
 if (!isset($_SESSION['type'])) {
-    header('location:login.php');
+	header('location:login.php');
 }
 
 include 'header.php';
@@ -189,7 +189,7 @@ $(document).ready(function(){
 		"order":[],
 		"ajax":{
 			url:"complain_fetch.php",
-			type:"POST"
+			type:"post"
 		},
 		"columnDefs":[
 			{
