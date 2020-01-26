@@ -1,4 +1,5 @@
 <?php
+// Datattable custom filter: https://makitweb.com/how-to-add-custom-filter-in-datatable-ajax-and-php/
 include 'database_connection.php';
 include 'function.php';
 
