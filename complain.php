@@ -81,7 +81,7 @@ include 'header.php';
 							<label>Emergency Contact to talk with</label>
 							<input type="text" name="contact_no" id="contact_no" class="form-control" required />
 						</div>
-						<?php if ($_SESSION["type"] == 'master') {?>
+						<?php if ($_SESSION["type"] == 'master' || $_SESSION['type'] == 'employee') {?>
 						<div class="form-group">
 						<select name="employee_id" id="employee_id" class="form-control">
 							<option value="">Assign A Staff</option>
@@ -135,7 +135,7 @@ $(document).ready(function(){
 				$('#complainModal').modal('hide');
 				$('#alert_action').fadeIn().html('<div class="alert alert-success">'+data+'</div>');
 				$('#action').attr('disabled', false);
-				complaindataTable.ajax.reload();
+				$('#complain_data').DataTable().ajax.reload();
 			}
 		})
 	});
