@@ -157,6 +157,7 @@ $(document).ready(function(){
 				$('#btn_action').val('Edit');
 			}
 		})
+
 	});
 
 	$(document).on('click','.delete', function(){
@@ -183,23 +184,42 @@ $(document).ready(function(){
 	});
 
 
-	var complaindataTable = $('#complain_data').DataTable({
-		"processing":true,
-		"serverSide":true,
-		"order":[],
-		"ajax":{
-			url:"complain_fetch.php",
-			type:"post"
-		},
-		"columnDefs":[
-			{
-				"targets":[7, 8],
-				"orderable":false,
-			},
-		],
-		"pageLength": 10
-	});
+});
 
+$(document).ready(function(){
+   $('#complain_data').DataTable({
+      'processing': true,
+      'serverSide': true,
+      "orderMulti": true,
+      "order": [[ 6, "asc" ], [ 5, "asc"]],
+      'serverMethod': 'post',
+      'ajax': {
+          'url':'complain_fetch.php',
+      },
+      dom: 'Bfrtip',
+        buttons: [
+            {
+                extend:    'copyHtml5',
+                text:      '<i class="fa fa-files-o" style="color: red"></i>',
+                titleAttr: 'Copy'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel-o" style="color: blue"></i>',
+                titleAttr: 'Excel'
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text-o" style="color: orange"></i>',
+                titleAttr: 'CSV'
+            },
+            {
+                extend:    'pdfHtml5',
+                text:      '<i class="fa fa-file-pdf-o" style="color: black"></i>',
+                titleAttr: 'PDF'
+            }
+        ]
+   });
 });
 
 </script>

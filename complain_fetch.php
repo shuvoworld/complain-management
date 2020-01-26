@@ -1,9 +1,20 @@
 <?php
 
-//brand_fetch.php
+/*
+You can follow this tutorial for datatable and php server side implementation: https://shanecunningham.me/blog/2018/03/20/datatables-with-pagination-using-ajax-php-mysql-calling-a-php-functions/
+ */
 
 include 'database_connection.php';
-
+$columns = array(
+// datatable column index  => database column name
+	0 => 'complain_id',
+	1 => 'complain_subject',
+	2 => 'user_name',
+	3 => 'complain_contact_no',
+	4 => 'employee_name',
+	5 => 'complain_updated_at',
+	6 => 'complain_status',
+);
 $query = '';
 
 $output = array();
@@ -28,11 +39,7 @@ if (isset($_POST["search"]["value"])) {
 	$query .= 'OR complain.contact_no LIKE "%' . $_POST["search"]["value"] . '%" )';
 }
 
-if (isset($_POST["order"])) {
-	$query .= ' ORDER BY ' . $_POST['order']['0']['column'] . ' ' . $_POST['order']['0']['dir'] . ' ';
-} else {
-	$query .= ' ORDER BY complain.status, complain.updated_at DESC ';
-}
+$query .= ' ORDER BY ' . $columns[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 
 if ($_POST["length"] != -1) {
 	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
