@@ -21,6 +21,13 @@ include 'header.php';
                 		<div class="col-md-2" align="right">
                 			<button type="button" name="add" id="add_button" class="btn btn-success">Add Complain</button>
                 		</div>
+                		<div class="col-md-2">
+                			<select id="searchByStatus" class="form-control">
+					           <option value=''>-- Select Status--</option>
+					           <option value='Pending'>Pending</option>
+					           <option value='Solved'>Solved</option>
+         					</select>
+                		</div>
                 	</div>
                 </div>
                 <div class="panel-body">
@@ -195,6 +202,10 @@ $(document).ready(function(){
       'serverMethod': 'post',
       'ajax': {
           'url':'complain_fetch.php',
+           'data': function(data){
+          		var searchByStatus = $('#searchByStatus').val(); // Read values
+          		data.searchByStatus = searchByStatus;                   // Append to data
+       		}
       },
       dom: 'Bfrtip',
         buttons: [
@@ -220,6 +231,10 @@ $(document).ready(function(){
             }
         ]
    });
+
+     $('#searchByStatus').change(function(){
+     $('#complain_data').DataTable().draw();
+  });
 });
 
 </script>

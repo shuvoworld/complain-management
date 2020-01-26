@@ -15,6 +15,8 @@ $columns = array(
 	5 => 'complain_updated_at',
 	6 => 'complain_status',
 );
+
+$searchByStatus = $_POST['searchByStatus'];
 $query = '';
 
 $output = array();
@@ -39,13 +41,17 @@ if (isset($_POST["search"]["value"])) {
 	$query .= 'OR complain.contact_no LIKE "%' . $_POST["search"]["value"] . '%" )';
 }
 
+if ($searchByStatus != '') {
+	$query .= " AND (complain.status='" . $searchByStatus . "') ";
+}
+
 $query .= ' ORDER BY ' . $columns[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 
 if ($_POST["length"] != -1) {
 	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
 
-//echo $query; die();
+//echo $query;die();
 $statement = $connect->prepare($query);
 
 $statement->execute();
