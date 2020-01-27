@@ -4,11 +4,11 @@
 include 'database_connection.php';
 
 if (!isset($_SESSION['type'])) {
-    header('location:login.php');
+	header('location:login.php');
 }
 
 if ($_SESSION['type'] != 'master') {
-    header("location:index.php");
+	header("location:index.php");
 }
 
 include 'header.php';
@@ -37,15 +37,15 @@ include 'header.php';
                     	<div class="col-sm-12 table-responsive">
                     		<table id="data" class="table table-bordered table-striped">
                     			<thead>
-														<tr>
-														<th>ID</th>
-														<th>Employee Name</th>
-														<th>Phone</th>
-														<th>Status</th>
-														<th>Edit</th>
-														<th>Delete</th>
-														</tr>
-												 </thead>
+									<tr>
+									<th>ID</th>
+									<th>Employee Name</th>
+									<th>Phone</th>
+									<th>Status</th>
+									<th>Edit</th>
+									<th>Delete</th>
+									</tr>
+								</thead>
                     		</table>
                     	</div>
                     </div>

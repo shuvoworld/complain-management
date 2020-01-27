@@ -1,17 +1,17 @@
 <?php
 //user.php
-include('database_connection.php');
-include('function.php');
+include 'database_connection.php';
+include 'function.php';
 
 if (!isset($_SESSION["type"])) {
-    header('location:login.php');
+	header('location:login.php');
 }
 
 if ($_SESSION["type"] != 'master') {
-    header("location:index.php");
+	header("location:index.php");
 }
 
-include('header.php');
+include 'header.php';
 ?>
 		<span id="alert_action"></span>
 		<div class="row">
@@ -153,11 +153,12 @@ $(document).ready(function(){
 
 	$(document).on('click', '.update', function(){
 		var user_id = $(this).attr("id");
+		var employee_id = $(this).attr("employee_id");
 		var btn_action = 'fetch_single';
 		$.ajax({
 			url:"user_action.php",
 			method:"POST",
-			data:{user_id:user_id, btn_action:btn_action},
+			data:{user_id:user_id, employee_id:employee_id, btn_action:btn_action},
 			dataType:"json",
 			success:function(data)
 			{
@@ -203,5 +204,5 @@ $(document).ready(function(){
 </script>
 
 <?php
-include('footer.php');
+include 'footer.php';
 ?>
