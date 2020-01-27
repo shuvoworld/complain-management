@@ -4,11 +4,11 @@ include 'database_connection.php';
 include 'function.php';
 
 if (!isset($_SESSION["type"])) {
-	header('location:login.php');
+    header('location:login.php');
 }
 
 if ($_SESSION["type"] != 'master') {
-	header("location:index.php");
+    header("location:index.php");
 }
 
 include 'header.php';
@@ -153,21 +153,20 @@ $(document).ready(function(){
 
 	$(document).on('click', '.update', function(){
 		var user_id = $(this).attr("id");
-		var employee_id = $(this).attr("employee_id");
 		var btn_action = 'fetch_single';
 		$.ajax({
 			url:"user_action.php",
 			method:"POST",
-			data:{user_id:user_id, employee_id:employee_id, btn_action:btn_action},
+			data:{user_id:user_id, btn_action:btn_action},
 			dataType:"json",
 			success:function(data)
 			{
 				$('#userModal').modal('show');
 				$('#user_name').val(data.user_name);
 				$('#user_email').val(data.user_email);
-				$('#user_type_id').val(data.user_type_id).trigger('change');
-				$('#client_id').val(data.client_id).trigger('change');
-				$('#employee_id').val(data.employee_id).trigger('change');
+				$('#user_type_id').val(data.user_type_id);
+				$('#client_id').val(data.client_id);
+				$('#employee_id').val(data.employee_id);
 				$('.modal-title').html("<i class='fa fa-pencil-square-o'></i> Edit User");
 				$('#user_id').val(user_id);
 				$('#action').val('Edit');
