@@ -9,6 +9,8 @@ if (isset($_POST['btn_action'])) {
     if (isset($_POST['employee_id'])) {
         $employee_id = $_POST['employee_id'];
         $employee_name = getSingleValue($connect, 'name', 'employee', 'id', $employee_id);
+        $client_id = null;
+        $client_name = null;
     } else {
         $employee_id = null;
         $employee_name = null;
@@ -16,6 +18,8 @@ if (isset($_POST['btn_action'])) {
     if (isset($_POST['client_id'])) {
         $client_id = $_POST['client_id'];
         $client_name = getSingleValue($connect, 'name', 'client', 'id', $_POST["client_id"]);
+        $employee_id = null;
+        $employee_name = null;
     } else {
         $client_id = null;
         $client_name = null;
