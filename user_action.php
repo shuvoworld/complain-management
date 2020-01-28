@@ -18,12 +18,14 @@ if (isset($_POST['btn_action'])) {
         $client_name = getSingleValue($connect, 'name', 'client', 'id', $_POST["client_id"]);
     } else {
         $client_id = null;
+        $client_name = null;
     }
     if ($_POST['btn_action'] == 'Add') {
         $query = "
 		INSERT INTO user_details (user_email, user_password, user_name, user_type_id, user_type, user_status, client_id, client_name, employee_id, employee_name)
 		VALUES (:user_email, :user_password, :user_name, :user_type_id, :user_type, :user_status, :client_id, :client_name, :employee_id, :employee_name)
 		";
+
         $statement = $connect->prepare($query);
         $statement->execute(
             array(
