@@ -5,6 +5,7 @@
 <html>
 <head>
 <title>Complain Management System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="js/jquery-1.10.2.min.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css" />
 <script src="js/jquery.dataTables.min.js"></script>
