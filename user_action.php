@@ -42,7 +42,7 @@ if (isset($_POST['btn_action'])) {
                 ':client_id' => $client_id,
                 ':client_name' => $client_name,
                 ':employee_id' => $_POST['employee_id'],
-                ':employee_name' => $employee_name
+                ':employee_name' => $employee_name,
             )
         );
         $result = $statement->fetchAll();
@@ -76,11 +76,12 @@ if (isset($_POST['btn_action'])) {
 			UPDATE user_details SET
 				user_name = '" . $_POST["user_name"] . "',
 				user_email = '" . $_POST["user_email"] . "',
-				user_type_id = '" . $_POST["user_type_id"] . "',
+                user_type_id = '" . $_POST["user_type_id"] . "',
+                user_type = '" . getSingleValue($connect, 'name', 'user_types', 'id', $_POST["user_type_id"]) . "',
 				client_id = '" . $client_id . "',
 				client_name = '" . $client_name . "',
-				employee_id = '" . $_POST['employee_id'] . "',
-				employee_name = '" . $employee_name . "'
+				employee_id = '" . $employee_id . "',
+				employee_name = '" . $employee_name . "',
 				user_password = '" . password_hash($_POST["user_password"], PASSWORD_DEFAULT) . "'
 				WHERE user_id = '" . $_POST["user_id"] . "'
 			";
@@ -89,9 +90,10 @@ if (isset($_POST['btn_action'])) {
 			UPDATE user_details SET
 				user_name = '" . $_POST["user_name"] . "',
 				user_email = '" . $_POST["user_email"] . "',
-				user_type_id = '" . $_POST["user_type_id"] . "',
-				client_id = '" . $client_id  . "',
-				client_name = '" . $client_name  . "',
+                user_type_id = '" . $_POST["user_type_id"] . "',
+                user_type = '" . getSingleValue($connect, 'name', 'user_types', 'id', $_POST["user_type_id"]) . "',
+				client_id = '" . $client_id . "',
+				client_name = '" . $client_name . "',
 				employee_id = '" . $employee_id . "',
 				employee_name = '" . $employee_name . "'
 				WHERE user_id = '" . $_POST["user_id"] . "'
@@ -99,6 +101,7 @@ if (isset($_POST['btn_action'])) {
         }
         $statement = $connect->prepare($query);
         $statement->execute();
+        print_r($statement->debugDumpParams());
         $result = $statement->fetchAll();
         if (isset($result)) {
             echo 'User Details Edited';

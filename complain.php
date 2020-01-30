@@ -4,7 +4,7 @@ include 'database_connection.php';
 include 'function.php';
 
 if (!isset($_SESSION['type'])) {
-	header('location:login.php');
+    header('location:login.php');
 }
 
 include 'header.php';
@@ -181,7 +181,7 @@ $(document).ready(function(){
 				success:function(data)
 				{
 					$('#alert_action').fadeIn().html('<div class="alert alert-info">'+data+'</div>');
-					complaindataTable.ajax.reload();
+					$('#complain_data').DataTable().ajax.reload();
 				}
 			})
 		}
