@@ -101,7 +101,6 @@ if (isset($_POST['btn_action'])) {
         }
         $statement = $connect->prepare($query);
         $statement->execute();
-        print_r($statement->debugDumpParams());
         $result = $statement->fetchAll();
         if (isset($result)) {
             echo 'User Details Edited';

@@ -1,7 +1,7 @@
 <?php
 //login.php
 
-include('database_connection.php');
+include 'database_connection.php';
 
 if (isset($_SESSION['type'])) {
     header("location:index.php");
@@ -17,8 +17,8 @@ if (isset($_POST["login"])) {
     $statement = $connect->prepare($query);
     $statement->execute(
         array(
-                'user_email'	=>	$_POST["user_email"]
-            )
+            'user_email' => $_POST["user_email"],
+        )
     );
     $count = $statement->rowCount();
     if ($count > 0) {
